@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BMI CHECKER 🩺</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-image: url('https://cdn.pixabay.com/photo/2016/11/29/12/54/stethoscope-1868392_1280.jpg');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      min-height: 100vh;
+      color: #fff;
+      backdrop-filter: brightness(0.5);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 30px 10px;
+    }
+
+    .container {
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 25px;
+      border-radius: 15px;
+      max-width: 430px;
+      width: 100%;
+      box-shadow: 0 0 10px rgba(0,0,0,0.6);
+    }
+
+    h1, h2 {
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-size: 28px;
+      color: #00ffd0;
+    }
+
+    h2 {
+      font-size: 14px;
+      color: #aaa;
+    }
+
+    label {
+      margin-top: 15px;
+      display: block;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 20px;
+      font-size: 16px;
+      color: #fff;
+      background-color: #00b894;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #019875;
+    }
+
+    #result {
+      margin-top: 20px;
+      background-color: rgba(255,255,255,0.1);
+      padding: 15px;
+      border-radius: 10px;
+    }
+
+    .tips {
+      margin-top: 30px;
+      font-size: 14px;
+      background-color: rgba(255,255,255,0.1);
+      padding: 15px;
+      border-radius: 10px;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    strong {
+      color: #00ffd0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>BMI CHECKER 🩺</h1>
+    <h2>Powered by DTN Okechukwu Progress</h2>
+
+    <label for="weight">Weight (kg):</label>
+    <input type="number" id="weight" placeholder="e.g. 65" step="0.1">
+
+    <label for="height">Height (cm):</label>
+    <input type="number" id="height" placeholder="e.g. 170" step="0.1">
+
+    <button onclick="calculateBMI()">Calculate BMI</button>
+
+    <div id="result"></div>
+
+    <div class="tips">
+      <h3>💡 General Fitness Tips:</h3>
+      <ul>
+        <li>Drink 8+ glasses of water daily</li>
+        <li>Exercise regularly (e.g., 30 min walk daily)</li>
+        <li>Eat more fruits, vegetables & whole grains</li>
+        <li>Limit processed foods & excess sugar</li>
+        <li>Get enough sleep and reduce stress</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    function calculateBMI() {
+      const weight = parseFloat(document.getElementById('weight').value);
+      const height = parseFloat(document.getElementById('height').value);
+      const resultDiv = document.getElementById('result');
+
+      if (!weight || !height || height <= 0) {
+        resultDiv.innerHTML = "⚠️ Please enter valid weight and height.";
+        return;
+      }
+
+      const heightMeters = height / 100;
+      const bmi = weight / (heightMeters * heightMeters);
+      const bmiRounded = bmi.toFixed(2);
+
+      let category = "";
+      let info = "";
+
+      if (bmi < 18.5) {
+        category = "Underweight";
+        info = `
+          <p><strong>Advice:</strong> You may be lacking essential nutrients. Increase intake of healthy fats, proteins, and calories. Consult a dietitian to check for nutrient deficiencies or underlying health issues.</p>
+        `;
+      } else if (bmi >= 18.5 && bmi < 24.9) {
+        category = "Normal weight";
+        info = `
+          <p><strong>Great!</strong> You're within a healthy weight range. Maintain this with a balanced diet, physical activity, and routine checkups. Prevention is better than cure!</p>
+        `;
+      } else if (bmi >= 25 && bmi < 29.9) {
+        category = "Overweight";
+        info = `
+          <p><strong>Advice:</strong> You may be at risk for heart disease, diabetes, and joint issues. Consider moderate exercise and calorie control. Small lifestyle changes can make a big difference.</p>
+        `;
+      } else {
+        category = "Obese";
+        info = `
+          <p><strong>Caution:</strong> Obesity increases risk of chronic diseases like hypertension, diabetes, and sleep apnea. A medically supervised weight loss plan and dietitian support is highly recommended.</p>
+        `;
+      }
+
+      resultDiv.innerHTML = `
+        <h3>Your BMI: <strong>${bmiRounded}</strong></h3>
+        <p><strong>Category:</strong> ${category}</p>
+        ${info}
+      `;
+    }
+  </script>
+
+</body>
+</html>
